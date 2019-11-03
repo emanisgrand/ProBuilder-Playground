@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.AI;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 /// <summary>
 /// This class is adapted and modified from the FSM implementation class available on UnifyCommunity website
@@ -18,6 +20,8 @@ using System.Collections.Generic;
 public abstract class FSMState {
     protected Dictionary<Transition, FSMStateID> map = new Dictionary<Transition, FSMStateID>();
     protected FSMStateID stateID;
+    
+    protected AIWaypointNetwork WaypointNetwork = null;
 
     public FSMStateID ID {
         get { return stateID; }
@@ -27,7 +31,8 @@ public abstract class FSMState {
     protected Transform[] waypoints;
     protected float curRotSpeed;
     protected float curSpeed;
-
+    protected int CurrentIndex = 0;
+    
     public void AddTransition(Transition transition, FSMStateID id) {
         // Check if anyone of the args is invallid
         if (transition == Transition.None || id == FSMStateID.None) {
@@ -103,12 +108,21 @@ public abstract class FSMState {
     /// <summary>
     /// Find the next semi-random patrol point
     /// </summary>
-    public void FindNextPoint() {
-        
-        //Debug.Log("Finding next point");
-        int rndIndex = Random.Range(0, waypoints.Length);
-        Vector3 rndPosition = Vector3.zero;
-        destPos = waypoints[rndIndex].position + rndPosition;
+    public void FindNextPoint(bool increment) {
+        if (!WaypointNetwork) return;
+        int incStep = increment ? 1 : 0;
+        Transform nextWayPointTransform = null;
+
+        int nextWayPoint = (CurrentIndex + incStep >= WaypointNetwork.Waypoints.Count) 
+            ? 0 
+            : CurrentIndex + incStep;
+        nextWayPointTransform = WaypointNetwork.Waypoints[nextWayPoint];
+
+        if (nextWayPointTransform != null) {
+            CurrentIndex = nextWayPoint;
+            //_navAgent.destination = nextWayPointTransform.position;
+            return;
+        }
     }
 
     /// <summary>

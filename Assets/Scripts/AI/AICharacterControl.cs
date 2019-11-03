@@ -9,7 +9,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
     [RequireComponent(typeof (ThirdPersonCharacter))]
     public class AICharacterControl : AdvancedFSM
     {
-        public UnityEngine.AI.NavMeshAgent agent { get; private set; } // the navmesh agent required for the path finding
+        public NavMeshAgent agent { get; private set; } // the navmesh agent required for the path finding
         public ThirdPersonCharacter character { get; private set; } // the character we are controlling
         public AIWaypointNetwork waypointNetwork { get; private set; } // waypoint network ref
         public Transform target; // target to aim for
@@ -34,6 +34,22 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
         private void ConstructFSM() {
             pointList = waypointNetwork.Waypoints;
+            
+            Transform[] waypoints = new Transform[pointList.Count];
+            int i = 0;
+            
+            // this is the same as AgentNavigation waypoint finder
+            foreach (Transform obj in pointList) {
+//                waypoints[i] = obj.transform;
+                i++;
+            }
+            
+            /*
+             * Set all of the states and transitions.
+             */
+            ChaseState chase = new ChaseState(waypoints);
+            chase.AddTransition(Transition.LostPlayer, FSMStateID.Patrolling);
+            chase.AddTransition(Transition.ReachPlayer, FSMStateID.Attacking);
         }
         
         protected override void FSMUpdate()

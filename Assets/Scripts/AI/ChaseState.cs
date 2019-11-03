@@ -12,7 +12,7 @@ public class ChaseState : FSMState {
         curSpeed = 100.0f;
 
         //find next Waypoint position
-        FindNextPoint();
+        FindNextPoint(true);
     }
 
     public override void Reason(Transform player, Transform npc) {
@@ -33,14 +33,12 @@ public class ChaseState : FSMState {
     }
 
     public override void Act(Transform player, Transform npc) {
-        // npc.GetComponent<AICharacterControl>().target = 
-        //Rotate to the target point
-//        destPos = player.position;
+            
+            // I don't think we need both a destPos and a target.
+            destPos = player.position;
             npc.GetComponent<AICharacterControl>().target = player.transform;
+            
 //        Quaternion targetRotation = Quaternion.LookRotation(destPos - npc.position);
 //        npc.rotation = Quaternion.Slerp(npc.rotation, targetRotation, Time.deltaTime * curRotSpeed);
-//
-//        //Go Forward
-//        npc.Translate(Vector3.forward * Time.deltaTime * curSpeed);
     }
 }

@@ -7,6 +7,9 @@ public class FSM : MonoBehaviour {
     // Player Transform
     protected Transform PlayerTransform;
     
+    // AI Nav Mesh Agent
+    protected NavMeshAgent NavAgent;
+    
     // next Destination position of the agent
     protected Vector3 DestPos;
     

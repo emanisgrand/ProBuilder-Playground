@@ -15,7 +15,7 @@ public class AgentNavigation : MonoBehaviour {
     public AnimationCurve JumpCurve = new AnimationCurve();
 
     // Private members
-    private NavMeshAgent _navAgent = null;
+    public NavMeshAgent _navAgent = null;
 
     // Start is called before the first frame update
     void Start() {

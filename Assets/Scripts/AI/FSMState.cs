@@ -17,10 +17,12 @@ using UnityStandardAssets.Characters.ThirdPerson;
 /// Reason method is used to determine which transition should be fired .
 /// Act method has the code to perform the actions the NPC is supposed to do if it´s on this state.
 /// </summary>
+
 public abstract class FSMState {
     protected Dictionary<Transition, FSMStateID> map = new Dictionary<Transition, FSMStateID>();
     protected FSMStateID stateID;
     
+    [SerializeField] protected NavMeshAgent Agent;
     protected AIWaypointNetwork WaypointNetwork = null;
 
     public FSMStateID ID {
@@ -104,11 +106,16 @@ public abstract class FSMState {
     /// NPC is a reference to the npc that is controlled by this class
     /// </summary>
     public abstract void Act(Transform player, Transform npc);
-
+    
+    
     /// <summary>
     /// Find the next semi-random patrol point
+    /// Can I set this in AI character control?
     /// </summary>
+    /// 
+    
     public void FindNextPoint(bool increment) {
+                
         if (!WaypointNetwork) return;
         int incStep = increment ? 1 : 0;
         Transform nextWayPointTransform = null;
@@ -120,7 +127,9 @@ public abstract class FSMState {
 
         if (nextWayPointTransform != null) {
             CurrentIndex = nextWayPoint;
-            //_navAgent.destination = nextWayPointTransform.position;
+            
+            // null
+            Agent.destination = nextWayPointTransform.position;
             return;
         }
     }

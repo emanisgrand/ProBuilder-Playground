@@ -81,7 +81,7 @@ public class AdvancedFSM : FSM {
     /// </summary>
     public void DeleteState(FSMStateID fsmState) {
         // Check for NullState before deleting
-        if (fsmState == FSMStateID.None) {
+        if (fsmState == FSMStateID.None) {                 
             Debug.LogError("FSM ERROR: null id is not allowed");
             return;
         }

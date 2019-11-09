@@ -17,6 +17,9 @@ public class PoolManager : MonoBehaviour {
 
     [SerializeField]
     private GameObject _bulletPrefab;
+
+    [SerializeField]
+    private GameObject _bulletContainer;
     
     [SerializeField] private List<GameObject> _bulletPool;
 
@@ -31,6 +34,9 @@ public class PoolManager : MonoBehaviour {
     List<GameObject> GenerateBullets(int amountOfBullets) {
         for (int i = 0; i < amountOfBullets; i++) {
             GameObject bullet = Instantiate(_bulletPrefab);
+            bullet.transform.parent = _bulletContainer.transform;
+            bullet.SetActive(false);
+            
             _bulletPool.Add(bullet);
         }
 

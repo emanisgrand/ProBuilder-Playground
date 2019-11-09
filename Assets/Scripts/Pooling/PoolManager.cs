@@ -42,4 +42,22 @@ public class PoolManager : MonoBehaviour {
 
         return _bulletPool;
     }
+
+    public GameObject RequestBullet() {
+        foreach (GameObject bullet in _bulletPool) {
+            if (!bullet.active) {
+                bullet.SetActive(true);
+            } else {
+                Instantiate(bullet);
+            }
+        }
+        // loop through the bullet list - [x]
+        // check for in-active bullet - [x]
+        // found one? - [x]
+        // set it active - [x] and return it to the player [??]  
+        // if no bullets are available (all are active) [x]
+        // generate x amount of bullets, run the request bullet method
+        return null;
+    }
+    
 }

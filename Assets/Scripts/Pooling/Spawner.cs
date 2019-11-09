@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour {
-    [SerializeField]
-    private GameObject bulletPrefab;
+    private PoolManager pm = PoolManager.Instance;
     
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space)) {
-            Instantiate(bulletPrefab);
+           GameObject bullet =  pm.RequestBullet();
         }
         
     }

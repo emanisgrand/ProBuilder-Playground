@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Boo.Lang.Environments;
 using UnityEngine;
 
 
@@ -24,7 +25,7 @@ public class PoolManager : MonoBehaviour {
     [SerializeField] private List<GameObject> _bulletPool;
 
     private void Awake() {
-        _instance = null;
+        _instance = this;
     }
 
     private void Start() {
@@ -44,20 +45,23 @@ public class PoolManager : MonoBehaviour {
     }
 
     public GameObject RequestBullet() {
-        foreach (GameObject bullet in _bulletPool) {
-            if (!bullet.active) {
+        // loop through the bullet list - [x]
+        foreach (var bullet in _bulletPool) {
+            // check for in-active bullet - [x]
+            if (bullet.activeInHierarchy == false) {
+                // set it active - [x] and return it to the player [x]
                 bullet.SetActive(true);
-            } else {
-                Instantiate(bullet);
+                return bullet;
             }
         }
-        // loop through the bullet list - [x]
-        // check for in-active bullet - [x]
-        // found one? - [x]
-        // set it active - [x] and return it to the player [??]  
-        // if no bullets are available (all are active) [x]
-        // generate x amount of bullets, run the request bullet method
-        return null;
+        // if we made it to this point...we need to generate more bullets
+        // SO if no bullets are available (all are active) [x]
+        // generate x amount of bullets, run the request bullet method [x]
+        GameObject newBullet = Instantiate(_bulletPrefab);
+        newBullet.transform.parent = _bulletContainer.transform;
+        _bulletPool.Add(newBullet);
+        
+        return newBullet;
     }
     
 }

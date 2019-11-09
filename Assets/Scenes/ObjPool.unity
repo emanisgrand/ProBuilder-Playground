@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 1097776330}
   - component: {fileID: 1097776329}
   m_Layer: 0
-  m_Name: Game_Manager
+  m_Name: Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -280,8 +280,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b4b8731339b08a44a05bc57c1f2edce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 9010481934297415864, guid: 4cdf98dc5e690164a9d6cfb5b7f7e00d,
-    type: 3}
 --- !u!4 &1097776330
 Transform:
   m_ObjectHideFlags: 0
